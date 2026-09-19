@@ -5,6 +5,7 @@
   --primary: #075985;
   --secondary: #0d9488;
   --accent: #f59e0b;
+  --danger: #b91c1c;
   --border: #d9e2ef;
 }
 
@@ -18,7 +19,8 @@ body {
 }
 
 button,
-input {
+input,
+select {
   font: inherit;
 }
 
@@ -29,6 +31,12 @@ button {
   background: #ffffff;
   color: #172033;
   cursor: pointer;
+  padding: 0 12px;
+}
+
+button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
 }
 
 .app {
@@ -47,12 +55,13 @@ button {
 }
 
 .hero {
-  min-height: 250px;
+  min-height: 220px;
   display: grid;
   align-content: center;
   gap: 14px;
   padding: 34px;
   border-left: 7px solid var(--primary);
+  position: relative;
 }
 
 .hero p,
@@ -79,6 +88,35 @@ button {
   line-height: 1.75;
 }
 
+.hero .ghost {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  color: #64748b;
+}
+
+/* 通知条 */
+.notice {
+  margin-top: 14px;
+  padding: 12px 16px;
+  border-radius: 8px;
+  border: 1px solid;
+  cursor: pointer;
+  line-height: 1.6;
+}
+
+.notice.ok {
+  background: #ecfdf5;
+  border-color: #6ee7b7;
+  color: #065f46;
+}
+
+.notice.err {
+  background: #fef2f2;
+  border-color: #fca5a5;
+  color: var(--danger);
+}
+
 .metrics {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -103,9 +141,19 @@ button {
 
 .workspace {
   display: grid;
-  grid-template-columns: 300px 1fr;
+  grid-template-columns: 360px 1fr;
   gap: 18px;
   margin-bottom: 18px;
+  align-items: start;
+}
+
+.workspace.bottom {
+  grid-template-columns: 1fr 1fr;
+}
+
+.side {
+  display: grid;
+  gap: 18px;
 }
 
 .panel {
@@ -118,18 +166,6 @@ button {
   margin-top: 0;
 }
 
-.chips {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-}
-
-.chips button {
-  padding: 0 12px;
-  border-color: color-mix(in srgb, var(--primary) 24%, var(--border));
-  background: color-mix(in srgb, var(--primary) 8%, #ffffff);
-}
-
 .heading {
   display: flex;
   align-items: start;
@@ -140,6 +176,10 @@ button {
 
 .heading h2 {
   margin-bottom: 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
 }
 
 .primary {
@@ -165,28 +205,170 @@ label span {
   font-size: 13px;
 }
 
-input {
+input,
+select {
   width: 100%;
   min-height: 42px;
   border-radius: 7px;
   border: 1px solid var(--border);
   padding: 0 12px;
+  background: #ffffff;
 }
 
+/* 徽章 */
+.badge {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+  vertical-align: middle;
+}
+
+.badge.warn,
+.hint.warn {
+  background: #fef2f2;
+  color: var(--danger);
+}
+
+.shift-active {
+  background: #ecfdf5;
+  color: #047857;
+}
+
+.shift-handing_over {
+  background: #fffbeb;
+  color: #b45309;
+}
+
+.shift-locked {
+  background: #f1f5f9;
+  color: #475569;
+}
+
+.st-queued {
+  background: #eff6ff;
+  color: #1d4ed8;
+}
+
+.st-filling {
+  background: #fffbeb;
+  color: #b45309;
+}
+
+.st-filled {
+  background: #fdf4ff;
+  color: #a21caf;
+}
+
+.st-signed {
+  background: #ecfdf5;
+  color: #047857;
+}
+
+.st-rework {
+  background: #fef2f2;
+  color: var(--danger);
+}
+
+/* 班次面板 */
+.meta {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin: 0 0 16px;
+}
+
+.meta dt {
+  color: #64748b;
+  font-size: 13px;
+}
+
+.meta dd {
+  margin: 4px 0 0;
+  font-weight: 700;
+}
+
+.handover-box {
+  display: grid;
+  gap: 12px;
+}
+
+.blockers {
+  border: 1px solid #fca5a5;
+  background: #fef2f2;
+  border-radius: 8px;
+  padding: 12px 14px;
+  color: var(--danger);
+}
+
+.blockers ul {
+  margin: 8px 0 0;
+  padding-left: 18px;
+  line-height: 1.8;
+}
+
+.ok-text {
+  color: #047857;
+  margin: 0;
+}
+
+/* 交接单 */
+.slip {
+  display: grid;
+  gap: 12px;
+  border-top: 1px dashed var(--border);
+  padding-top: 16px;
+}
+
+.slip h3 {
+  margin-bottom: 0;
+}
+
+.slip-line {
+  margin: 0;
+  color: #526071;
+}
+
+.slip table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.slip th,
+.slip td {
+  text-align: left;
+  padding: 8px 10px;
+  border-bottom: 1px solid var(--border);
+}
+
+.slip th {
+  color: #64748b;
+  font-weight: 600;
+  background: #f8fafc;
+}
+
+/* 队列 */
 .records {
   display: grid;
   gap: 12px;
 }
 
-.records article {
+.records article,
+.fill-row {
   display: grid;
-  grid-template-columns: 54px 1fr;
+  grid-template-columns: 1fr auto;
   gap: 14px;
   align-items: center;
   padding: 14px;
   border: 1px solid var(--border);
   border-radius: 8px;
   background: #fbfdff;
+}
+
+.records article {
+  grid-template-columns: 54px 1fr;
 }
 
 .records b {
@@ -198,19 +380,129 @@ input {
   background: linear-gradient(135deg, var(--primary), var(--accent));
 }
 
-.records h3 {
-  margin-bottom: 6px;
+.records h3,
+.fill-main h3 {
+  margin: 0 0 6px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
 }
 
-.records p {
+.records p,
+.fill-main p {
   margin: 0;
   color: #526071;
   line-height: 1.6;
 }
 
-@media (max-width: 860px) {
+.actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.inline-form {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.inline-form input {
+  max-width: 260px;
+}
+
+/* 未了事项 */
+.todo {
+  margin-top: 16px;
+  border-top: 1px dashed var(--border);
+  padding-top: 14px;
+  display: grid;
+  gap: 10px;
+}
+
+.todo h3 {
+  margin: 0;
+  color: var(--danger);
+}
+
+.todo-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 12px;
+  border: 1px solid #fca5a5;
+  background: #fff7f7;
+  border-radius: 8px;
+}
+
+/* 表单提示 */
+.hints {
+  margin-top: 14px;
+  display: grid;
+  gap: 8px;
+}
+
+.hint {
+  display: inline-block;
+  padding: 8px 12px;
+  border-radius: 7px;
+  background: #f0fdfa;
+  color: #0f766e;
+  font-size: 14px;
+}
+
+/* 历史快照与更正 */
+.snapshot {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 12px 14px;
+  margin-bottom: 10px;
+  background: #fbfdff;
+}
+
+.snapshot h3 {
+  margin: 0 0 6px;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.snapshot p {
+  margin: 0;
+}
+
+.correction {
+  margin-top: 16px;
+  border-top: 1px dashed var(--border);
+  padding-top: 14px;
+  display: grid;
+  gap: 12px;
+}
+
+.correction-list {
+  margin: 0;
+  padding-left: 18px;
+  color: #526071;
+  line-height: 1.9;
+}
+
+.correction-line {
+  color: #b45309 !important;
+}
+
+.muted {
+  color: #94a3b8;
+  font-size: 13px;
+}
+
+@media (max-width: 960px) {
   .metrics,
   .workspace,
+  .workspace.bottom,
   .field-grid {
     grid-template-columns: 1fr;
   }
@@ -218,5 +510,10 @@ input {
   .hero {
     min-height: 210px;
     padding: 24px;
+  }
+
+  .hero .ghost {
+    position: static;
+    justify-self: start;
   }
 }
